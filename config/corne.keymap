@@ -7,6 +7,200 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/ext_power.h>
+#include "keymap_spanish.h"
+
+// Layer aliases 
+#define DEF 0
+#define LOW 1
+#define RAI 2
+#define ADJ 3
+
+/{
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        tri_layer {
+            if-layers = <LOW RAI>;
+            then-layer = <ADJ>;
+        };
+    };
+    
+        keymap {
+                compatible = "zmk,keymap";
+
+                default_layer {
+                      label = "DEF";
+// ---------------------------------------------------------------------------------------
+// |  TAB |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BKSP |
+// | CTRL |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
+// |(SHFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  -  | SHFT)|
+//                    | GUI | LWR | SPC |   | ENT | RSE  |BKSP |
+                        bindings = <
+&kp TAB   &kp Q &kp W &kp E &kp R &kp T         &kp Y &kp U &kp I &kp O &kp P &kp BSPC
+&kp LCTRL &kp A &kp S &kp D &kp F &kp G         &kp H &kp J &kp K &kp L &kp ES_NTIL &kp SQT
+&mt LSHIFT STAR &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M &kp COMMA &kp DOT &kp ES_MINS &mt RSHIFT LPAR
+                  &kp LGUI &mo 1 &kp SPACE      &kp RET &mo 2 &kp BKSP
+                        >;
+                };
+                
+                lower_layer {
+                    label = "LOW";
+// -----------------------------------------------------------------------------------------
+// |  ESC |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  | BKSP |
+// |      | F1  | F2  | F3  | F4  | F5  |   | LFT | DWN |  UP | RGT |     |      |
+// |  <   | F6  | F7  | F8  | F9  | F10 |   | F11 | F12 |     |     |     |   >  |
+//                    | BL |     | SPC |   | ENT |     | ALT |
+                        bindings = <
+   &kp ESC &kp N1 &kp N2 &kp N3 &kp N4 &kp N5                   &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp BSPC
+   &trans &kp F1 &kp F2 &kp F3 &kp F4 &kp F5                    &kp LEFT &kp DOWN &kp UP &kp RIGHT &trans &trans
+   &mt LSHIFT GRAVE  &kp F6 &kp F7 &kp F8 &kp F9 &kp F10        &kp F11 &kp F12 &trans &trans &trans &mt RSHIFT TILDE
+                          	   &bootloader &trans &kp SPACE        &kp RET &trans &kp RALT
+                        >;
+                };
+                
+                raise_layer {
+                     label = "RAI";
+// -----------------------------------------------------------------------------------------
+// |  º   |  !  |  @  |  #  |  $  |  %  |  |  ^  |  &  |  *  |  (  |  )  | BKSP |
+// | CTRL |     |     |     |     |     |  |  '  |  =  |  [  |  ]  |  \  |  `   |
+// |   {  |     |     |     |     |     |  |  ¿  |  ?  |  {  |  }  | "|" |   }  |
+//                    | GUI |     | SPC |  | ENT |     | BL |
+                        bindings = <
+   &kp ES_MORD &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCNT       &kp ES_AMPR &kp ES_SLSH  &kp ES_LPRN &kp ES_RPRN &kp ES_EQL &kp BSPC
+   &kp LCTRL &trans &trans &trans &trans &trans                  &kp ES_QUOT &kp EQUAL &kp LBKT &kp RBKT &kp BSLH &kp GRAVE
+   &mt LSHIFT ES_LCBR &trans &trans &trans &trans &trans         &kp ES_QUES &kp ES_IQUE &kp LBRC &kp RBRC &kp PIPE &mt LSHIFT ES_RCBR
+                    	     &kp LGUI &trans &kp SPACE           &kp RET &trans  &bootloader
+                        >;
+                };
+                
+                adjust_layer {
+                    label = "ADJ";
+// -----------------------------------------------------------------------------------------
+// |    BL| (2) | (3) |  €  | (5) | (6) |   | ON  | OFF  |    |     |     |BL    |
+// | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   |     |volDN|volUP|     |     |      |
+// | [    |     |     |     |     |     |   |     |     |     |     |     |  ]   |
+//                    |     |     |     |   |     |     |     |
+                        bindings = <
+   &bootloader &trans &trans &kp ES_EURO &trans &trans                          &ext_power EP_ON &ext_power EP_OFF &trans &trans &trans   &bootloader
+   &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4   &trans &kp C_VOL_DN &kp C_VOL_UP &trans &trans &trans
+    &mt LSHIFT RA(LBKT) &trans &trans &trans &trans &trans                               &trans &trans &trans &trans &trans  &mt LSHIFT RA(RBKT)
+                              &trans &trans &trans                               &trans &trans &trans 
+                        >;
+                };
+   };
+};
+
+
+
+
+
+
+/*Mi Config inicial
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
+
+/ {
+    combos {
+        compatible = "zmk,combos";
+
+        Tabulador {
+            bindings = <&kp TAB>;
+            key-positions = <1 2>;
+        };
+
+        Caps_lock {
+            bindings = <&kp CAPS>;
+            key-positions = <35 24>;
+        };
+
+        Ejecutar {
+            bindings = <&kp RG(R)>;
+            key-positions = <16 19>;
+        };
+
+        Pantallazo {
+            bindings = <&kp RG(RS(S))>;
+            key-positions = <25 34>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            // -----------------------------------------------------------------------------------------
+            // |  TAB |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BKSP |
+            // | CTRL |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
+            // | SHFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | ESC  |
+            //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
+
+            bindings = <
+&kp GRAVE  &kp Q  &kp W  &kp E      &kp R      &kp T    &kp Y  &kp U      &kp I      &kp O    &kp P     &kp MINUS
+&kp CAPS   &kp A  &kp S  &kp D      &kp F      &kp G    &kp H  &kp J      &kp K      &kp L    &kp SEMI  &kp SQT
+&kp LSHFT  &kp Z  &kp X  &kp C      &kp V      &kp B    &kp N  &kp M      &kp COMMA  &kp DOT  &kp FSLH  &kp RIGHT_SHIFT
+                         &kp LCTRL  &kp ENTER  &mo 1    &mo 2  &kp SPACE  &kp RALT
+            >;
+        };
+
+        lower_layer {
+            // -----------------------------------------------------------------------------------------
+            // |  TAB |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  | BKSP |
+            // | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   | LFT | DWN |  UP | RGT |     |      |
+            // | SHFT |     |     |     |     |     |   |     |     |     |     |     |      |
+            //                    | GUI |     | SPC |   | ENT |     | ALT |
+
+            bindings = <
+&kp ESCAPE  &kp N1      &kp N2        &kp N3        &kp N4        &kp N5              &kp N6  &kp N7  &kp N8  &kp N9  &kp N0  &kp BSPC
+&kp K_MUTE  &kp LC(Z)   &kp LC(X)     &kp LC(C)     &kp LC(V)     &kp K_PLAY_PAUSE    &trans  &trans  &trans  &trans  &trans  &trans
+&kp LSHFT   &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3        &trans  &trans  &trans  &trans  &trans  &trans
+                                      &none         &trans        &trans              &trans  &trans  &none
+            >;
+        };
+
+        raise_layer {
+            // -----------------------------------------------------------------------------------------
+            // |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BKSP |
+            // | CTRL |     |     |     |     |     |   |  -  |  =  |  [  |  ]  |  \  |  `   |
+            // | SHFT |     |     |     |     |     |   |  _  |  +  |  {  |  }  | "|" |  ~   |
+            //                    | GUI |     | SPC |   | ENT |     | ALT |
+
+            bindings = <
+&kp TAB    &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT    &kp CARET  &kp BACKSPACE   &kp UP_ARROW    &kp DELETE  &kp RPAR  &kp BSPC
+&kp LCTRL  &trans    &trans  &trans    &trans    &trans       &kp MINUS  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT   &kp BSLH  &kp GRAVE
+&kp LSHFT  &trans    &trans  &trans    &trans    &trans       &kp UNDER  &kp PLUS        &kp LBRC        &kp RBRC    &kp PIPE  &kp TILDE
+                             &kp LGUI  &trans    &trans       &trans     &trans          &none
+            >;
+        };
+
+        layer_3 {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans    &trans  &trans  &trans
+            >;
+        };
+    };
+};
+
+
+
+
+/* DEFAULT ORIGINAL
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ 
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
 
 / {
         keymap {
@@ -54,3 +248,4 @@
                 };
         };
 };
+*/
